@@ -11,6 +11,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -43,55 +44,16 @@ public class MainActivity extends AppCompatActivity {
     //お天気APIにアクセスするためのAPIキー
     private static final String APP_ID = "c3cd44f35c1908efb0247c72ed39b446";
     //リストビューに表示させるリストデータ
-    private List<Map<String, String>> _list;
+
+    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        _list = createList();
-
-        ListView lvCityList = findViewById(R.id.lvCityList);
-        String[] from = {"name"};
-        int [] to = {android.R.id.text1};
-        SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), _list,
-                android.R.layout.simple_list_item_1, from, to);
-
-        lvCityList.setAdapter(adapter);
-        lvCityList.setOnItemClickListener(new ListItemClickListener());
+        editText = findViewById(R.id.edit_text);
     }
-    //リストビューに表示させる天気ポイントリストデータを生成するメソッド
-    private  List<Map<String,String>> createList() {
-        List<Map<String,String>> list = new ArrayList<>();
 
-        Map<String,String> map = new HashMap<>();
-        map.put("name","大阪");
-        map.put("q","Osaka");
-        list.add(map);
-        map = new HashMap<>();
-        map.put("name","神戸");
-        map.put("q","Kobe");
-        list.add(map);
-        map = new HashMap<>();
-        map.put("name","京都");
-        map.put("q","Kyoto");
-        list.add(map);
-        map = new HashMap<>();
-        map.put("name","奈良");
-        map.put("q","Nara");
-        list.add(map);
-        map = new HashMap<>();
-        map.put("name","和歌山");
-        map.put("q","Wakayama");
-        list.add(map);
-        map = new HashMap<>();
-        map.put("name","姫路");
-        map.put("q","Himeji");
-        list.add(map);
-
-        return list;
-
-    }
 
     //お天気情報の取得処理を行うメソッド
     @UiThread
@@ -192,10 +154,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     //非同期でお天気情報を取得した後にUIスレッドでその情報を表示するためのクラス
     private class WeatherInfoPostExecutor implements Runnable {
         //取得したお天気情報JSON文字列
         private final String _result;
+        private  static final String DEBUG_TAG = "AsynSample";
 
         //コンストラクタ
         public WeatherInfoPostExecutor(String result){
@@ -242,30 +206,13 @@ public class MainActivity extends AppCompatActivity {
             String desc = "現在は" + weather + "です。\n緯度は" + latitude + "度で経度は" +
                     longitude + "です。";
 
-            //天気を表示するtextビューを取得
-            TextView tvWeatherTelop = findViewById(R.id.tvWeatherTelop);
-            TextView tvWeatherDesc = findViewById(R.id.tvWeatherDesc);
-            //天気情報を表示
-            tvWeatherTelop.setText(telop);
-            tvWeatherDesc.setText(desc);
+            //ここで次の画面にいく
 
         }
 
     }
 
 
-    //リストがタップされた時の処理が記述されたリスナクラス
-    private class ListItemClickListener implements AdapterView.OnItemClickListener{
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-            Map<String,String> item = _list.get(position);
-            String q = item.get("q");
-            String urlFill = WEATHERINFO_URL + "&q=" + q + "&appid=" + APP_ID;
 
-            receiveWeatherInfo(urlFill);
-
-        }
-
-    }
 
 }
