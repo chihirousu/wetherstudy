@@ -7,6 +7,8 @@ import androidx.core.os.HandlerCompat;
 import androidx.core.text.SpannableStringBuilderKt;
 
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -39,6 +41,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
@@ -71,16 +74,36 @@ public class MainActivity extends AppCompatActivity {
         Button btClick = findViewById(R.id.btClick);
         // リスナクラスのインスタンスを生成。
         HelloListener listener = new HelloListener();
+        listener.context = this;
         // 表示ボタンにリスナを設定。
         btClick.setOnClickListener(listener);
 
     }
 
+    // コンテキストと都市名から緯度経度を取得するメソッド
+    public double[] getLocationFromCityName(Context context, String name) {
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        try {
+            List<Address> location = geocoder.getFromLocationName(name, 1);
+            if (location == null || location.size() < 1) {
+                return null;
+            }
 
+            Address address = location.get(0);
+            double[] latlng = { address.getLatitude(), address.getLongitude() };
+            return latlng;
+        }
+        catch (IOException e) {
+            // 例外処理
+            return null;
+        }
+    }
 
 
 
     private class HelloListener implements View.OnClickListener {
+
+        MainActivity context;
         @Override
         public void onClick(View view) {
             // 入力欄であるEditTextオブジェクトを取得。
@@ -95,6 +118,15 @@ public class MainActivity extends AppCompatActivity {
                 String inputStr = input.getText().toString();
                 // メッセージを表示。
                 System.out.println("入力文字は:" + inputStr);
+
+                double[] citylatlong = getLocationFromCityName(context, inputStr);
+                for(double d: citylatlong) {
+                    System.out.println(d + "緯度");
+
+                }
+                Log.d("ちひろ",citylatlong.toString());
+
+
 
             }
         }
