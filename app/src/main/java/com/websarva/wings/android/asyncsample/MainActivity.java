@@ -23,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editText;
     // プログレスバー
     private ProgressBar progressBar;
+    private LinearLayout contentLinear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         editText = findViewById(R.id.edit_text);
         progressBar = findViewById(R.id.progressbar);
+        contentLinear = findViewById(R.id.content_linear);
 
         // プログレスバー消す
         progressBar.setVisibility(ProgressBar.GONE);
@@ -86,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
         // 表示ボタンにリスナを設定。
         btClick.setOnClickListener(listener);
 
+    }
+
+    @Override
+    public void onResume(){
+        Log.i("AsyncSample","Result onCreate() called.");
+        super.onResume();
+        contentLinear.setVisibility(LinearLayout.VISIBLE);
     }
 
     // コンテキストと都市名から緯度経度を取得するメソッド
@@ -146,9 +156,8 @@ public class MainActivity extends AppCompatActivity {
                 // リクエスト（URLで通信をする）開始
                 receiveWeatherInfo(urlbox);
 //              //通信が開始するときに表示
+                contentLinear.setVisibility(LinearLayout.GONE);
                 progressBar.setVisibility(android.widget.ProgressBar.VISIBLE);
-
-
             }
         }
 
@@ -306,16 +315,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("上條テロ",telop);
                 Log.d("上條デス",desc);
 
-                // プログレスバー消す
-                progressBar.setVisibility(ProgressBar.GONE);
-
-
                 //ここで次の画面にいく
                 // TODO: -画面遷移はこうやる
                 Intent intent = new Intent(MainActivity.this, ResultActivity.class);
                 intent.putExtra("TEROP", telop);
                 intent.putExtra("DESC",desc);
                 startActivity(intent);
+
+                // プログレスバー消す
+                //contentLinear.setVisibility(LinearLayout.VISIBLE);
+                progressBar.setVisibility(ProgressBar.GONE);
 
             }
 
