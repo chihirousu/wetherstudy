@@ -141,9 +141,6 @@ public class MainActivity extends AppCompatActivity {
                 receiveWeatherInfo(urlbox);
 
 
-                // TODO: -画面遷移はこうやる
-//                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
-//                startActivity(intent);
             }
         }
 
@@ -293,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //画面に表示する「⚪︎の天気」文字列を生成
-                String telop = cityName + "の天気";
+                String telop = editText.getText().toString() + "の天気";
                 //天気の情報を表示する文字列を生成
                 String desc = "現在は" + weather + "です。\n緯度は" + latitude + "度で経度は" +
                         longitude + "です。";
@@ -303,6 +300,11 @@ public class MainActivity extends AppCompatActivity {
 
 
                 //ここで次の画面にいく
+                // TODO: -画面遷移はこうやる
+                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+                intent.putExtra("TEROP", telop);
+                intent.putExtra("DESC",desc);
+                startActivity(intent);
 
             }
 
