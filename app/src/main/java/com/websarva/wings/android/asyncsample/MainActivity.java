@@ -142,11 +142,15 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("入力文字は:" + inputStr);
 
                 double[] citylatlong = getLocationFromCityName(context, inputStr);
+                if (citylatlong == null || citylatlong.length < 2 ) {
+                    //citylatlongがnullまたは、citylatlong（配列）の中身の数が２個未満の時は後続の処理はしない
+                    return;
+                }
+
                 for(double d: citylatlong) {
                     System.out.println(d + "緯度");
 
                 }
-                Log.d("ちひろ",citylatlong.toString());
 
                 // 緯度
                 double lat = citylatlong[0];
