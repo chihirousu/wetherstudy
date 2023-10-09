@@ -1,11 +1,13 @@
 package com.websarva.wings.android.asyncsample;
 
 import androidx.annotation.UiThread;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -35,9 +37,24 @@ public class ResultActivity extends AppCompatActivity {
         tvWeatherTelop.setText(telop);
         tvWeatherDesc.setText(desc);
 
+        //アクションバー
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuButton){
+        int buttonId = menuButton.getItemId();
+        if (buttonId == android.R.id.home){
+            finish();
+            return true;
+        }
+        return false;
+    }
+
+
     @Override
     public void onStart(){
         Log.i("AsyncSample","Result onCreate() called.");
