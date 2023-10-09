@@ -132,9 +132,18 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.d("ちひろ",citylatlong.toString());
 
+                // 緯度
+                double lat = citylatlong[0];
+                // 経度
+                double lon = citylatlong[1];
+                String urlbox = getURLStringFromLatLong(lat, lon);
+                // リクエスト（URLで通信をする）開始
+                receiveWeatherInfo(urlbox);
+
+
                 // TODO: -画面遷移はこうやる
-                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+//                startActivity(intent);
             }
         }
 
@@ -282,11 +291,16 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException ex) {
                     Log.e(DEBUG_TAG, "JSON解析失敗", ex);
                 }
+
                 //画面に表示する「⚪︎の天気」文字列を生成
                 String telop = cityName + "の天気";
                 //天気の情報を表示する文字列を生成
                 String desc = "現在は" + weather + "です。\n緯度は" + latitude + "度で経度は" +
                         longitude + "です。";
+
+                Log.d("上條テロ",telop);
+                Log.d("上條デス",desc);
+
 
                 //ここで次の画面にいく
 
