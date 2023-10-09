@@ -39,9 +39,10 @@ public class ResultActivity extends AppCompatActivity {
 
         //アクションバー
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-
+        if (actionBar != null) {
+            // アクションバーがnullじゃないことを担保して実行する
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
     }
     @Override
