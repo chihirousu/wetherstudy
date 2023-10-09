@@ -7,6 +7,7 @@ import androidx.core.os.HandlerCompat;
 import androidx.core.text.SpannableStringBuilderKt;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     //お天気APIにアクセスするためのAPIキー
     private static final String APP_ID = "c3cd44f35c1908efb0247c72ed39b446";
     //リストビューに表示させるリストデータ
+    private List<Map<String, String>> _list;
 
     EditText editText;
 
@@ -99,7 +101,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    //緯度と経度を引数にとってURL文字列を生成して返すメソッド
+    public String getURLStringFromLatLong(double lat,double lon) {
+        String urlStr = WEATHERINFO_URL + "&lat=" + lat + "&lon=" + lon + "&appid=" + APP_ID;
+        return urlStr;
+    }
 
     private class HelloListener implements View.OnClickListener {
 
@@ -126,8 +132,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.d("ちひろ",citylatlong.toString());
 
-
-
+                // TODO: -画面遷移はこうやる
+                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+                startActivity(intent);
             }
         }
 
