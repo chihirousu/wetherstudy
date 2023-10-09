@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.os.HandlerCompat;
 import androidx.core.text.SpannableStringBuilderKt;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
@@ -23,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,16 +63,20 @@ public class MainActivity extends AppCompatActivity {
     //リストビューに表示させるリストデータ
     private List<Map<String, String>> _list;
 
+    // 入力内容
     EditText editText;
+    // プログレスバー
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         editText = findViewById(R.id.edit_text);
+        progressBar = findViewById(R.id.progressbar);
 
-
-
+        // プログレスバー消す
+        progressBar.setVisibility(ProgressBar.GONE);
 
         // 表示ボタンであるButtonオブジェクトを取得。
         Button btClick = findViewById(R.id.btClick);
@@ -139,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
                 String urlbox = getURLStringFromLatLong(lat, lon);
                 // リクエスト（URLで通信をする）開始
                 receiveWeatherInfo(urlbox);
+//              //通信が開始するときに表示
+                progressBar.setVisibility(android.widget.ProgressBar.VISIBLE);
 
 
             }
@@ -297,6 +305,9 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d("上條テロ",telop);
                 Log.d("上條デス",desc);
+
+                // プログレスバー消す
+                progressBar.setVisibility(ProgressBar.GONE);
 
 
                 //ここで次の画面にいく
