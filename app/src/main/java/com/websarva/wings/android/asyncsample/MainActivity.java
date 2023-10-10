@@ -143,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
 
                 double[] citylatlong = getLocationFromCityName(context, inputStr);
                 if (citylatlong == null || citylatlong.length < 2 ) {
-                    //citylatlongがnullまたは、citylatlong（配列）の中身の数が２個未満の時は後続の処理はしない
                     return;
                 }
 
