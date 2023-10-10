@@ -3,6 +3,7 @@ package com.websarva.wings.android.asyncsample;
 import androidx.annotation.UiThread;
 import androidx.annotation.WorkerThread;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.HandlerCompat;
 import androidx.core.text.SpannableStringBuilderKt;
 
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         editText = findViewById(R.id.edit_text);
         progressBar = findViewById(R.id.progressbar);
         contentLinear = findViewById(R.id.content_linear);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         // プログレスバー消す
         progressBar.setVisibility(ProgressBar.GONE);
