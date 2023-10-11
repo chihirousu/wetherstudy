@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         listener.context = this;
         // 表示ボタンにリスナを設定。
         btClick.setOnClickListener(listener);
-
     }
 
     @Override
@@ -145,6 +144,11 @@ public class MainActivity extends AppCompatActivity {
 
                 double[] citylatlong = getLocationFromCityName(context, inputStr);
                 if (citylatlong == null || citylatlong.length < 2 ) {
+
+                    //エラーダイアログの処理
+                    CustomDialog dialog = new CustomDialog();
+                    dialog.show(getSupportFragmentManager(), "my_dialog");
+
                     return;
                 }
 
