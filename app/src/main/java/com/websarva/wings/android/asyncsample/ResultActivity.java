@@ -22,9 +22,7 @@ public class ResultActivity extends AppCompatActivity {
 
 
 
-        Intent intent = getIntent();
-        String telop = intent.getStringExtra("TEROP");
-        String desc = intent.getStringExtra("DESC");
+        
 
 
         Log.i("AsyncSample","Result onCreate() called.");
@@ -33,9 +31,6 @@ public class ResultActivity extends AppCompatActivity {
         //天気を表示するtextビューを取得
         tvWeatherTelop = findViewById(R.id.tvWeatherTelop);
         tvWeatherDesc = findViewById(R.id.tvWeatherDesc);
-        //天気情報を表示
-        tvWeatherTelop.setText(telop);
-        tvWeatherDesc.setText(desc);
 
         //アクションバー
         ActionBar actionBar = getSupportActionBar();
@@ -72,6 +67,13 @@ public class ResultActivity extends AppCompatActivity {
     public void onResume(){
         Log.i("AsyncSample","Result onCreate() called.");
         super.onResume();
+
+        Intent intent = getIntent();
+        String telop = intent.getStringExtra("TEROP");
+        String desc = intent.getStringExtra("DESC");
+        //天気情報を表示
+        tvWeatherTelop.setText(telop);
+        tvWeatherDesc.setText(desc);
     }
 
     @Override
