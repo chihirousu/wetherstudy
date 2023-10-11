@@ -19,26 +19,18 @@ public class ResultActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-
-        
-
-
         Log.i("AsyncSample","Result onCreate() called.");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         //天気を表示するtextビューを取得
         tvWeatherTelop = findViewById(R.id.tvWeatherTelop);
         tvWeatherDesc = findViewById(R.id.tvWeatherDesc);
-
         //アクションバー
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // アクションバーがnullじゃないことを担保して実行する
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem menuButton){
@@ -49,7 +41,6 @@ public class ResultActivity extends AppCompatActivity {
         }
         return false;
     }
-
 
     @Override
     public void onStart(){
@@ -75,24 +66,4 @@ public class ResultActivity extends AppCompatActivity {
         tvWeatherTelop.setText(telop);
         tvWeatherDesc.setText(desc);
     }
-
-    @Override
-    public void onPause(){
-        Log.i("AsyncSample","Result onCreate() called.");
-        super.onPause();
-    }
-
-    @Override
-    public void onStop(){
-        Log.i("AsyncSample","Result onCreate() called.");
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroy(){
-        Log.i("AsyncSample","Result onCreate() called.");
-        super.onDestroy();
-    }
-
-
 }

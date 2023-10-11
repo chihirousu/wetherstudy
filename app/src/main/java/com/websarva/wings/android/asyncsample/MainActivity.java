@@ -263,10 +263,7 @@ public class MainActivity extends AppCompatActivity {
                 while (0 <= (line = reader.read(b))) {
                     sb.append(b, 0, line);
                 }
-
                 return sb.toString();
-
-
             }
 
         }
@@ -320,27 +317,17 @@ public class MainActivity extends AppCompatActivity {
                 //天気の情報を表示する文字列を生成
                 String desc = "現在は" + weather + "です。\n緯度は" + latitude + "度で経度は" +
                         longitude + "です。";
-
-                Log.d("上條テロ",telop);
-                Log.d("上條デス",desc);
-
                 //ここで次の画面にいく
                 // TODO: -画面遷移はこうやる
                 Intent intent = new Intent(MainActivity.this, ResultActivity.class);
                 intent.putExtra("TEROP", telop);
                 intent.putExtra("DESC",desc);
                 startActivity(intent);
-
                 // プログレスバー消す
                 //contentLinear.setVisibility(LinearLayout.VISIBLE);
                 progressBar.setVisibility(ProgressBar.GONE);
-
             }
 
         }
     }
-
-
-
-
 }
