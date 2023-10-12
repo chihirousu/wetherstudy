@@ -14,8 +14,9 @@ public class CustomDialog extends DialogFragment{
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        String message = getArguments().getString(MainActivity.DIALOG_MESSAGE_KEY);
         builder.setTitle("エラー")
-                .setMessage("実在の地名を入力してください")
+                .setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // ボタンを押した時の処理

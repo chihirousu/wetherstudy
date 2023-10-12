@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String WEATHERINFO_URL ="https://api.openweathermap.org/data/2.5/weather?lang=ja";
     //お天気APIにアクセスするためのAPIキー
     private static final String APP_ID = "c3cd44f35c1908efb0247c72ed39b446";
-    //リストビューに表示させるリストデータ
-    private List<Map<String, String>> _list;
+    // ダイアログに渡す引数のキー
+    static final String DIALOG_MESSAGE_KEY = "DIALOG_MESSAGE_KEY";
 
     // 入力内容
     EditText editText;
@@ -127,14 +127,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // ネットワーク接続確認
-    public static boolean netWorkCheck(Context context){
+    public static boolean netCheck(Context context){
         ConnectivityManager cm =  (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = cm.getActiveNetworkInfo();
         if( info != null ){
             return info.isConnectedOrConnecting();
-        } else {
-            return false;
         }
+        return false;
     }
 
     private class HelloListener implements View.OnClickListener {
@@ -142,8 +141,14 @@ public class MainActivity extends AppCompatActivity {
         MainActivity context;
         @Override
         public void onClick(View view) {
-            boolean netWorkEnabled = netWorkCheck(context);
+            boolean netWorkEnabled = netCheck(context);
             if (netWorkEnabled == false) {
+                //インターネット接続がない時ここに落ちる
+                CustomDialog dialog = new CustomDialog();
+                Bundle args = new Bundle();
+                args.putString(DIALOG_MESSAGE_KEY, "インターネット接続がありません");
+                dialog.setArguments(args);
+                dialog.show(getSupportFragmentManager(), "my_dialog");
                 return;
             }
 
@@ -163,6 +168,9 @@ public class MainActivity extends AppCompatActivity {
                 if (citylatlong == null || citylatlong.length < 2 ) {
                     //エラーダイアログの処理
                     CustomDialog dialog = new CustomDialog();
+                    Bundle args = new Bundle();
+                    args.putString(DIALOG_MESSAGE_KEY, "実在の地名を入力してください");
+                    dialog.setArguments(args);
                     dialog.show(getSupportFragmentManager(), "my_dialog");
                     return;
                 }
