@@ -12,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -124,14 +126,29 @@ public class MainActivity extends AppCompatActivity {
         return urlStr;
     }
 
+    // ネットワーク接続確認
+    public static boolean netWorkCheck(Context context){
+        ConnectivityManager cm =  (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        if( info != null ){
+            return info.isConnectedOrConnecting();
+        } else {
+            return false;
+        }
+    }
+
     private class HelloListener implements View.OnClickListener {
 
         MainActivity context;
         @Override
         public void onClick(View view) {
+            boolean netWorkEnabled = netWorkCheck(context);
+            if (netWorkEnabled == false) {
+                return;
+            }
+
             // 入力欄であるEditTextオブジェクトを取得。
             EditText input = findViewById(R.id.edit_text);
-
             // タップされた画面部品のidのR値を取得。
             int id = view.getId();
             // idのR値に応じて処理を分岐。
@@ -144,11 +161,9 @@ public class MainActivity extends AppCompatActivity {
 
                 double[] citylatlong = getLocationFromCityName(context, inputStr);
                 if (citylatlong == null || citylatlong.length < 2 ) {
-
                     //エラーダイアログの処理
                     CustomDialog dialog = new CustomDialog();
                     dialog.show(getSupportFragmentManager(), "my_dialog");
-
                     return;
                 }
 
@@ -164,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 String urlbox = getURLStringFromLatLong(lat, lon);
                 // リクエスト（URLで通信をする）開始
                 receiveWeatherInfo(urlbox);
-//              //通信が開始するときに表示
+                //通信が開始するときに表示
                 contentLinear.setVisibility(LinearLayout.GONE);
                 progressBar.setVisibility(android.widget.ProgressBar.VISIBLE);
             }
